@@ -6,8 +6,10 @@ Eating an allergenic food applies the Allergy effect, which causes Weakness, Slo
 
 ## Commands
 
-- `/allergy list` — shows your allergens.
-- `/allergy regenerate` — generates a new random allergy list.
-- `/allergy sneeze` — makes the executing player sneeze, including the configured sneeze damage and screen overlay.
-- `/allergy add <item>` — adds an item to your allergy list.
-- `/allergy remove <item>` — removes an item from your allergy list.
+- `/allergy list [targets]` — shows the allergens for you or the selected player(s).
+- `/allergy regenerate [targets]` — generates a new random allergy list for you or the selected player(s).
+- `/allergy sneeze [targets]` — makes you or the selected player(s) sneeze, including the configured sneeze damage and screen overlay.
+- `/allergy add <item> [targets]` — adds an item to your or the selected player(s)' allergy list.
+- `/allergy remove <item> [targets]` — removes an item from your or the selected player(s)' allergy list.
+
+`targets` accepts a player name or selector such as `@p`, `@a`, or `@a[distance=..10]`. Omitting it keeps the original behavior and applies the command to yourself. Commands that modify allergy data or trigger sneezing still require operator permission level 2.
