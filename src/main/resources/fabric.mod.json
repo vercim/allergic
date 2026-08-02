@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "allergic",
+  "version": "${version}",
+  "name": "Allergic",
+  "description": "Assigns individual food allergies to players in every world.",
+  "authors": [
+    "vercim"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/allergic/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.vercim.allergic.AllergicMod"
+    ],
+    "modmenu": [
+      "dev.vercim.allergic.integration.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "allergic.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "cloth-config2": "*",
+    "modmenu": "*"
+  }
+}
