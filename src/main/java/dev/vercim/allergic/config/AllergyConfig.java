@@ -86,6 +86,7 @@ public record AllergyConfig(
     }
 
     private static AllergyConfig fromJson(JsonObject object) {
+        boolean legacyConfig = object.has("damageIntervalTicks") || object.has("damageAmount");
         double chance = readFiniteDouble(object, "allergyChance", DEFAULT_ALLERGY_CHANCE);
         if (chance < 0.0D || chance > 1.0D) {
             chance = DEFAULT_ALLERGY_CHANCE;
@@ -97,6 +98,9 @@ public record AllergyConfig(
                 DEFAULT_ALLERGY_DURATION_SECONDS,
                 MAX_SECONDS
         );
+        if (legacyConfig && duration == 20) {
+            duration = DEFAULT_ALLERGY_DURATION_SECONDS;
+        }
         int sneezeMinInterval = readPositiveInteger(
                 object,
                 "sneezeMinIntervalSeconds",
@@ -114,7 +118,8 @@ public record AllergyConfig(
             sneezeMaxInterval = DEFAULT_SNEEZE_MAX_INTERVAL_SECONDS;
         }
 
-        double amountValue = readFiniteDouble(object, "sneezeDamageAmount", DEFAULT_SNEEZE_DAMAGE_AMOUNT);
+        double legacyDamageAmount = readFiniteDouble(object, "damageAmount", DEFAULT_SNEEZE_DAMAGE_AMOUNT);
+        double amountValue = readFiniteDouble(object, "sneezeDamageAmount", legacyDamageAmount);
         float amount = amountValue > 0.0D && amountValue <= Float.MAX_VALUE
                 ? (float) amountValue
                 : DEFAULT_SNEEZE_DAMAGE_AMOUNT;
