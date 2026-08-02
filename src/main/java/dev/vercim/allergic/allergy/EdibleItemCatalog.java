@@ -31,10 +31,4 @@ public final class EdibleItemCatalog {
         return stack.get(DataComponentTypes.FOOD) != null || stack.getUseAction() == UseAction.EAT;
     }
 
-    public static boolean isEdible(Identifier identifier) {
-        return Registries.ITEM.getOrEmpty(identifier)
-                .map(Item::getDefaultStack)
-                .map(EdibleItemCatalog::isEdible)
-                .orElse(false);
-    }
 }

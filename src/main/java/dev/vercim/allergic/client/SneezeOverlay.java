@@ -40,7 +40,19 @@ public final class SneezeOverlay {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
-        context.drawTexture(TEXTURE, 0, 0, 0.0F, 0.0F, width, height, TEXTURE_WIDTH, TEXTURE_HEIGHT);
+        context.drawTexture(
+                TEXTURE,
+                0,
+                0,
+                width,
+                height,
+                0.0F,
+                0.0F,
+                TEXTURE_WIDTH,
+                TEXTURE_HEIGHT,
+                TEXTURE_WIDTH,
+                TEXTURE_HEIGHT
+        );
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.disableBlend();
     }
