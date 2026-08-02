@@ -3,7 +3,7 @@
   "id": "allergic",
   "version": "${version}",
   "name": "Allergic",
-  "description": "Assigns individual food allergies to players in every world.",
+  "description": "Assigns individual food allergies to players.",
   "authors": [
     "vercim"
   ],

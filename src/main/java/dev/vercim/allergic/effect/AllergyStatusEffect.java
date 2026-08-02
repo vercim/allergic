@@ -62,7 +62,7 @@ public final class AllergyStatusEffect extends StatusEffect {
             schedules.put(entity, schedule);
         }
 
-        if (now >= schedule.nextSneezeTick) {
+        if (config.sneezingEnabled() && now >= schedule.nextSneezeTick) {
             sneeze(entity, config, amplifier);
             schedule.nextSneezeTick = now + randomDelayTicks(
                     entity,
@@ -71,7 +71,7 @@ public final class AllergyStatusEffect extends StatusEffect {
             );
         }
 
-        if (now >= schedule.nextNauseaTick) {
+        if (config.nauseaEnabled() && now >= schedule.nextNauseaTick) {
             entity.addStatusEffect(visibleSymptomSeconds(StatusEffects.NAUSEA, config.nauseaDurationSeconds()));
             schedule.nextNauseaTick = now + randomDelayTicks(
                     entity,
@@ -85,17 +85,29 @@ public final class AllergyStatusEffect extends StatusEffect {
     }
 
     private static void applyPersistentEffects(LivingEntity entity, int allergyDurationTicks) {
-        entity.addStatusEffect(visibleSymptom(StatusEffects.WEAKNESS, allergyDurationTicks));
-        entity.addStatusEffect(visibleSymptom(StatusEffects.SLOWNESS, allergyDurationTicks));
-        entity.addStatusEffect(visibleSymptom(StatusEffects.MINING_FATIGUE, allergyDurationTicks));
+        AllergyConfig config = AllergyConfig.get();
+        if (config.weaknessEnabled()) {
+            entity.addStatusEffect(visibleSymptom(StatusEffects.WEAKNESS, allergyDurationTicks));
+        }
+        if (config.slownessEnabled()) {
+            entity.addStatusEffect(visibleSymptom(StatusEffects.SLOWNESS, allergyDurationTicks));
+        }
+        if (config.miningFatigueEnabled()) {
+            entity.addStatusEffect(visibleSymptom(StatusEffects.MINING_FATIGUE, allergyDurationTicks));
+        }
     }
 
     public static void triggerSneeze(LivingEntity entity) {
-        sneeze(entity, AllergyConfig.get(), 0);
+        AllergyConfig config = AllergyConfig.get();
+        if (config.sneezingEnabled()) {
+            sneeze(entity, config, 0);
+        }
     }
 
     private static void sneeze(LivingEntity entity, AllergyConfig config, int amplifier) {
-        entity.damage(entity.getDamageSources().magic(), config.sneezeDamageAmount() * (amplifier + 1));
+        if (config.sneezeDamageEnabled()) {
+            entity.damage(entity.getDamageSources().magic(), config.sneezeDamageAmount() * (amplifier + 1));
+        }
         spawnSneezeParticles(entity);
         if (entity instanceof ServerPlayerEntity player) {
             ServerPlayNetworking.send(player, SneezePayload.INSTANCE);

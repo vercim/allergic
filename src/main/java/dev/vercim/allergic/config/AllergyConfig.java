@@ -17,22 +17,34 @@ import java.nio.file.Path;
 public record AllergyConfig(
         double allergyChance,
         int allergyDurationSeconds,
+        boolean sneezingEnabled,
+        boolean sneezeDamageEnabled,
         int sneezeMinIntervalSeconds,
         int sneezeMaxIntervalSeconds,
         float sneezeDamageAmount,
+        boolean nauseaEnabled,
         int nauseaMinIntervalSeconds,
         int nauseaMaxIntervalSeconds,
-        int nauseaDurationSeconds
+        int nauseaDurationSeconds,
+        boolean weaknessEnabled,
+        boolean slownessEnabled,
+        boolean miningFatigueEnabled
 ) {
     public static final int MAX_SECONDS = Integer.MAX_VALUE / 20;
     public static final double DEFAULT_ALLERGY_CHANCE = 0.35D;
     public static final int DEFAULT_ALLERGY_DURATION_SECONDS = 300;
+    public static final boolean DEFAULT_SNEEZING_ENABLED = true;
+    public static final boolean DEFAULT_SNEEZE_DAMAGE_ENABLED = true;
     public static final int DEFAULT_SNEEZE_MIN_INTERVAL_SECONDS = 10;
     public static final int DEFAULT_SNEEZE_MAX_INTERVAL_SECONDS = 30;
     public static final float DEFAULT_SNEEZE_DAMAGE_AMOUNT = 1.0F;
     public static final int DEFAULT_NAUSEA_MIN_INTERVAL_SECONDS = 20;
     public static final int DEFAULT_NAUSEA_MAX_INTERVAL_SECONDS = 60;
     public static final int DEFAULT_NAUSEA_DURATION_SECONDS = 10;
+    public static final boolean DEFAULT_NAUSEA_ENABLED = true;
+    public static final boolean DEFAULT_WEAKNESS_ENABLED = true;
+    public static final boolean DEFAULT_SLOWNESS_ENABLED = true;
+    public static final boolean DEFAULT_MINING_FATIGUE_ENABLED = true;
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("allergic.json");
@@ -66,12 +78,18 @@ public record AllergyConfig(
         return new AllergyConfig(
                 DEFAULT_ALLERGY_CHANCE,
                 DEFAULT_ALLERGY_DURATION_SECONDS,
+                DEFAULT_SNEEZING_ENABLED,
+                DEFAULT_SNEEZE_DAMAGE_ENABLED,
                 DEFAULT_SNEEZE_MIN_INTERVAL_SECONDS,
                 DEFAULT_SNEEZE_MAX_INTERVAL_SECONDS,
                 DEFAULT_SNEEZE_DAMAGE_AMOUNT,
+                DEFAULT_NAUSEA_ENABLED,
                 DEFAULT_NAUSEA_MIN_INTERVAL_SECONDS,
                 DEFAULT_NAUSEA_MAX_INTERVAL_SECONDS,
-                DEFAULT_NAUSEA_DURATION_SECONDS
+                DEFAULT_NAUSEA_DURATION_SECONDS,
+                DEFAULT_WEAKNESS_ENABLED,
+                DEFAULT_SLOWNESS_ENABLED,
+                DEFAULT_MINING_FATIGUE_ENABLED
         );
     }
 
@@ -98,6 +116,8 @@ public record AllergyConfig(
         if (legacyConfig && duration == 20) {
             duration = DEFAULT_ALLERGY_DURATION_SECONDS;
         }
+        boolean sneezingEnabled = readBoolean(object, "sneezingEnabled", DEFAULT_SNEEZING_ENABLED);
+        boolean sneezeDamageEnabled = readBoolean(object, "sneezeDamageEnabled", DEFAULT_SNEEZE_DAMAGE_ENABLED);
         int sneezeMinInterval = readPositiveInteger(
                 object,
                 "sneezeMinIntervalSeconds",
@@ -121,6 +141,7 @@ public record AllergyConfig(
                 ? (float) amountValue
                 : DEFAULT_SNEEZE_DAMAGE_AMOUNT;
 
+        boolean nauseaEnabled = readBoolean(object, "nauseaEnabled", DEFAULT_NAUSEA_ENABLED);
         int nauseaMinInterval = readPositiveInteger(
                 object,
                 "nauseaMinIntervalSeconds",
@@ -143,16 +164,25 @@ public record AllergyConfig(
                 DEFAULT_NAUSEA_DURATION_SECONDS,
                 MAX_SECONDS
         );
+        boolean weaknessEnabled = readBoolean(object, "weaknessEnabled", DEFAULT_WEAKNESS_ENABLED);
+        boolean slownessEnabled = readBoolean(object, "slownessEnabled", DEFAULT_SLOWNESS_ENABLED);
+        boolean miningFatigueEnabled = readBoolean(object, "miningFatigueEnabled", DEFAULT_MINING_FATIGUE_ENABLED);
 
         return new AllergyConfig(
                 chance,
                 duration,
+                sneezingEnabled,
+                sneezeDamageEnabled,
                 sneezeMinInterval,
                 sneezeMaxInterval,
                 amount,
+                nauseaEnabled,
                 nauseaMinInterval,
                 nauseaMaxInterval,
-                nauseaDuration
+                nauseaDuration,
+                weaknessEnabled,
+                slownessEnabled,
+                miningFatigueEnabled
         );
     }
 
@@ -176,6 +206,19 @@ public record AllergyConfig(
             return fallback;
         }
         return (int) value;
+    }
+
+    private static boolean readBoolean(JsonObject object, String key, boolean fallback) {
+        try {
+            if (!object.has(key)
+                    || !object.get(key).isJsonPrimitive()
+                    || !object.getAsJsonPrimitive(key).isBoolean()) {
+                return fallback;
+            }
+            return object.get(key).getAsBoolean();
+        } catch (RuntimeException exception) {
+            return fallback;
+        }
     }
 
     private static void save(AllergyConfig config) {
