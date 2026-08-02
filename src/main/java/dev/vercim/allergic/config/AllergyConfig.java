@@ -20,21 +20,19 @@ public record AllergyConfig(
         int sneezeMinIntervalSeconds,
         int sneezeMaxIntervalSeconds,
         float sneezeDamageAmount,
-        int darknessDurationSeconds,
         int nauseaMinIntervalSeconds,
         int nauseaMaxIntervalSeconds,
         int nauseaDurationSeconds
 ) {
     public static final int MAX_SECONDS = Integer.MAX_VALUE / 20;
-    public static final double DEFAULT_ALLERGY_CHANCE = 0.3D;
+    public static final double DEFAULT_ALLERGY_CHANCE = 0.35D;
     public static final int DEFAULT_ALLERGY_DURATION_SECONDS = 300;
-    public static final int DEFAULT_SNEEZE_MIN_INTERVAL_SECONDS = 5;
-    public static final int DEFAULT_SNEEZE_MAX_INTERVAL_SECONDS = 10;
+    public static final int DEFAULT_SNEEZE_MIN_INTERVAL_SECONDS = 10;
+    public static final int DEFAULT_SNEEZE_MAX_INTERVAL_SECONDS = 30;
     public static final float DEFAULT_SNEEZE_DAMAGE_AMOUNT = 1.0F;
-    public static final int DEFAULT_DARKNESS_DURATION_SECONDS = 1;
     public static final int DEFAULT_NAUSEA_MIN_INTERVAL_SECONDS = 20;
-    public static final int DEFAULT_NAUSEA_MAX_INTERVAL_SECONDS = 40;
-    public static final int DEFAULT_NAUSEA_DURATION_SECONDS = 5;
+    public static final int DEFAULT_NAUSEA_MAX_INTERVAL_SECONDS = 60;
+    public static final int DEFAULT_NAUSEA_DURATION_SECONDS = 10;
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("allergic.json");
@@ -71,7 +69,6 @@ public record AllergyConfig(
                 DEFAULT_SNEEZE_MIN_INTERVAL_SECONDS,
                 DEFAULT_SNEEZE_MAX_INTERVAL_SECONDS,
                 DEFAULT_SNEEZE_DAMAGE_AMOUNT,
-                DEFAULT_DARKNESS_DURATION_SECONDS,
                 DEFAULT_NAUSEA_MIN_INTERVAL_SECONDS,
                 DEFAULT_NAUSEA_MAX_INTERVAL_SECONDS,
                 DEFAULT_NAUSEA_DURATION_SECONDS
@@ -124,12 +121,6 @@ public record AllergyConfig(
                 ? (float) amountValue
                 : DEFAULT_SNEEZE_DAMAGE_AMOUNT;
 
-        int darknessDuration = readPositiveInteger(
-                object,
-                "darknessDurationSeconds",
-                DEFAULT_DARKNESS_DURATION_SECONDS,
-                MAX_SECONDS
-        );
         int nauseaMinInterval = readPositiveInteger(
                 object,
                 "nauseaMinIntervalSeconds",
@@ -159,7 +150,6 @@ public record AllergyConfig(
                 sneezeMinInterval,
                 sneezeMaxInterval,
                 amount,
-                darknessDuration,
                 nauseaMinInterval,
                 nauseaMaxInterval,
                 nauseaDuration

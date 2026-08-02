@@ -44,10 +44,6 @@ final class AllergyClothConfigScreen {
                 .setDefaultValue(defaults.sneezeDamageAmount()).setMin(0.01F).setMax(Float.MAX_VALUE)
                 .setTooltip(Text.translatable("option.allergic.sneezeDamageAmount.tooltip"))
                 .setSaveConsumer(value -> draft.sneezeDamageAmount = value).build());
-        category.addEntry(entries.startIntField(Text.translatable("option.allergic.darknessDurationSeconds"), saved.darknessDurationSeconds())
-                .setDefaultValue(defaults.darknessDurationSeconds()).setMin(1).setMax(AllergyConfig.MAX_SECONDS)
-                .setTooltip(Text.translatable("option.allergic.darknessDurationSeconds.tooltip"))
-                .setSaveConsumer(value -> draft.darknessDurationSeconds = value).build());
         category.addEntry(entries.startIntField(Text.translatable("option.allergic.nauseaMinIntervalSeconds"), saved.nauseaMinIntervalSeconds())
                 .setDefaultValue(defaults.nauseaMinIntervalSeconds()).setMin(1).setMax(AllergyConfig.MAX_SECONDS)
                 .setTooltip(Text.translatable("option.allergic.nauseaMinIntervalSeconds.tooltip"))
@@ -71,7 +67,6 @@ final class AllergyClothConfigScreen {
         private int sneezeMinIntervalSeconds;
         private int sneezeMaxIntervalSeconds;
         private float sneezeDamageAmount;
-        private int darknessDurationSeconds;
         private int nauseaMinIntervalSeconds;
         private int nauseaMaxIntervalSeconds;
         private int nauseaDurationSeconds;
@@ -82,7 +77,6 @@ final class AllergyClothConfigScreen {
             sneezeMinIntervalSeconds = config.sneezeMinIntervalSeconds();
             sneezeMaxIntervalSeconds = config.sneezeMaxIntervalSeconds();
             sneezeDamageAmount = config.sneezeDamageAmount();
-            darknessDurationSeconds = config.darknessDurationSeconds();
             nauseaMinIntervalSeconds = config.nauseaMinIntervalSeconds();
             nauseaMaxIntervalSeconds = config.nauseaMaxIntervalSeconds();
             nauseaDurationSeconds = config.nauseaDurationSeconds();
@@ -95,7 +89,6 @@ final class AllergyClothConfigScreen {
                     sneezeMinIntervalSeconds,
                     sneezeMaxIntervalSeconds,
                     sneezeDamageAmount,
-                    darknessDurationSeconds,
                     nauseaMinIntervalSeconds,
                     nauseaMaxIntervalSeconds,
                     nauseaDurationSeconds

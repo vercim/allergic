@@ -15,6 +15,9 @@
     "main": [
       "dev.vercim.allergic.AllergicMod"
     ],
+    "client": [
+      "dev.vercim.allergic.client.AllergicClient"
+    ],
     "modmenu": [
       "dev.vercim.allergic.integration.ModMenuIntegration"
     ]

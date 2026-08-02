@@ -1,4 +1,5 @@
 {
+  "effect.allergic.allergy": "Аллергия",
   "subtitles.allergic.sneeze": "Чихание",
   "text.allergic.config.title": "Настройки Allergic",
   "text.allergic.config.category.general": "Общие",
@@ -12,8 +13,6 @@
   "option.allergic.sneezeMaxIntervalSeconds.tooltip": "Максимальная задержка между чиханиями. Не может быть меньше минимальной.",
   "option.allergic.sneezeDamageAmount": "Урон от чихания",
   "option.allergic.sneezeDamageAmount.tooltip": "Урон от каждого чихания до учёта уровня эффекта.",
-  "option.allergic.darknessDurationSeconds": "Длительность тьмы от чихания (секунды)",
-  "option.allergic.darknessDurationSeconds.tooltip": "Как долго действует эффект тьмы после каждого чихания.",
   "option.allergic.nauseaMinIntervalSeconds": "Мин. интервал между приступами тошноты (секунды)",
   "option.allergic.nauseaMinIntervalSeconds.tooltip": "Минимальная задержка между приступами тошноты.",
   "option.allergic.nauseaMaxIntervalSeconds": "Макс. интервал между приступами тошноты (секунды)",

@@ -5,6 +5,7 @@ import dev.vercim.allergic.command.AllergyCommands;
 import dev.vercim.allergic.config.AllergyConfig;
 import dev.vercim.allergic.registry.ModSounds;
 import dev.vercim.allergic.registry.ModStatusEffects;
+import dev.vercim.allergic.network.ModNetworking;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ public final class AllergicMod implements ModInitializer {
     @Override
     public void onInitialize() {
         AllergyConfig.load();
+        ModNetworking.register();
         ModSounds.register();
         ModStatusEffects.register();
         AllergyManager.registerEvents();

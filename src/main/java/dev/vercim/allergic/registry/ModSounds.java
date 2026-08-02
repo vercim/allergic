@@ -7,12 +7,13 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 public final class ModSounds {
+    private static final float SNEEZE_AUDIBLE_RANGE = 32.0F;
     private static final Identifier SNEEZE_ID = Identifier.of(AllergicMod.MOD_ID, "sneeze");
 
     public static final SoundEvent SNEEZE = Registry.register(
             Registries.SOUND_EVENT,
             SNEEZE_ID,
-            SoundEvent.of(SNEEZE_ID)
+            SoundEvent.of(SNEEZE_ID, SNEEZE_AUDIBLE_RANGE)
     );
 
     private ModSounds() {

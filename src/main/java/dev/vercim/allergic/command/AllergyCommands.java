@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.vercim.allergic.allergy.AllergyManager;
+import dev.vercim.allergic.effect.AllergyStatusEffect;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.ItemStackArgumentType;
@@ -27,16 +28,19 @@ public final class AllergyCommands {
 
     private static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
         dispatcher.register(CommandManager.literal("allergy")
-                .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("list").executes(AllergyCommands::list))
-                .then(CommandManager.literal("regenerate").executes(AllergyCommands::regenerate))
-                .then(CommandManager.literal("check")
-                        .then(CommandManager.argument("item", ItemStackArgumentType.itemStack(registryAccess))
-                                .executes(AllergyCommands::check)))
+                .then(CommandManager.literal("regenerate")
+                        .requires(source -> source.hasPermissionLevel(2))
+                        .executes(AllergyCommands::regenerate))
+                .then(CommandManager.literal("sneeze")
+                        .requires(source -> source.hasPermissionLevel(2))
+                        .executes(AllergyCommands::sneeze))
                 .then(CommandManager.literal("add")
+                        .requires(source -> source.hasPermissionLevel(2))
                         .then(CommandManager.argument("item", ItemStackArgumentType.itemStack(registryAccess))
                                 .executes(AllergyCommands::add)))
                 .then(CommandManager.literal("remove")
+                        .requires(source -> source.hasPermissionLevel(2))
                         .then(CommandManager.argument("item", ItemStackArgumentType.itemStack(registryAccess))
                                 .executes(AllergyCommands::remove))));
     }
@@ -63,13 +67,9 @@ public final class AllergyCommands {
         return count;
     }
 
-    private static int check(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
-        Identifier identifier = getItemIdentifier(context);
-        boolean allergen = AllergyManager.isAllergen(player, identifier);
-        String key = allergen ? "commands.allergic.check.yes" : "commands.allergic.check.no";
-        context.getSource().sendFeedback(() -> Text.translatable(key, identifier), false);
-        return allergen ? 1 : 0;
+    private static int sneeze(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        AllergyStatusEffect.triggerSneeze(context.getSource().getPlayerOrThrow());
+        return 1;
     }
 
     private static int add(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
