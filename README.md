@@ -1,15 +1,15 @@
 # Allergic
 
-Allergic — мод для Minecraft, который добавляет пищевую аллергию. При первом входе в мир каждый игрок получает случайный индивидуальный набор продуктов-аллергенов.
+Allergic is a Minecraft mod that adds food allergies. When a player first joins a world, they receive their own randomly generated set of food allergens.
 
-Если игрок съест такой продукт, он получит эффект аллергии: ослабление, периодическое чихание с уроном и кратковременной тьмой, а также приступы тошноты. Повторное употребление аллергена обновляет время действия эффекта. Мод распознаёт как обычную, так и добавленную другими модами еду.
+Eating an allergenic food applies the Allergy effect, which causes weakness, periodic sneezing that deals damage and briefly applies Darkness, and occasional nausea. Eating another allergen refreshes the effect duration. The mod supports both vanilla food and food added by other mods.
 
-## Команды
+## Commands
 
-Все команды доступны игрокам с уровнем прав 2 и изменяют список аллергенов того, кто их выполняет.
+All commands require permission level 2 and affect the allergy list of the player who runs them.
 
-- `/allergy list` — показать свои аллергены.
-- `/allergy regenerate` — создать новый случайный список аллергенов.
-- `/allergy check <item>` — проверить, является ли предмет аллергеном.
-- `/allergy add <item>` — добавить предмет в список аллергенов.
-- `/allergy remove <item>` — удалить предмет из списка аллергенов.
+- `/allergy list` — shows your allergens.
+- `/allergy regenerate` — generates a new random allergy list.
+- `/allergy check <item>` — checks whether an item is an allergen.
+- `/allergy add <item>` — adds an item to your allergy list.
+- `/allergy remove <item>` — removes an item from your allergy list.
