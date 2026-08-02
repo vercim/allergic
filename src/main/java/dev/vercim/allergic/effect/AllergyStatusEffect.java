@@ -23,6 +23,7 @@ public final class AllergyStatusEffect extends StatusEffect {
     private static final int PARTICLE_COLOR = 0xC94F5C;
     private static final int TICKS_PER_SECOND = 20;
     private static final int MAX_INITIAL_NAUSEA_DELAY_SECONDS = 10;
+    private static final double SNEEZE_UPWARD_VELOCITY = 0.25D;
     private static final DustParticleEffect SNEEZE_PARTICLE_BRIGHT =
             new DustParticleEffect(new Vector3f(0.55F, 1.0F, 0.08F), 1.2F);
     private static final DustParticleEffect SNEEZE_PARTICLE_DARK =
@@ -108,6 +109,8 @@ public final class AllergyStatusEffect extends StatusEffect {
         if (config.sneezeDamageEnabled()) {
             entity.damage(entity.getDamageSources().magic(), config.sneezeDamageAmount() * (amplifier + 1));
         }
+        entity.addVelocity(0.0D, SNEEZE_UPWARD_VELOCITY, 0.0D);
+        entity.velocityModified = true;
         spawnSneezeParticles(entity);
         if (entity instanceof ServerPlayerEntity player) {
             ServerPlayNetworking.send(player, SneezePayload.INSTANCE);

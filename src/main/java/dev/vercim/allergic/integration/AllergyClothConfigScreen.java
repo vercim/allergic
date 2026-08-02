@@ -8,10 +8,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 final class AllergyClothConfigScreen {
-    private static final String ALLERGIES_CATEGORY = "text.allergic.config.category.allergies";
-    private static final String SNEEZING_CATEGORY = "text.allergic.config.category.sneezing";
-    private static final String SYMPTOMS_CATEGORY = "text.allergic.config.category.symptoms";
-
     private AllergyClothConfigScreen() {
     }
 
@@ -23,64 +19,62 @@ final class AllergyClothConfigScreen {
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
                 .setTitle(Text.translatable("text.allergic.config.title"));
-        ConfigCategory allergies = builder.getOrCreateCategory(Text.translatable(ALLERGIES_CATEGORY));
-        ConfigCategory sneezing = builder.getOrCreateCategory(Text.translatable(SNEEZING_CATEGORY));
-        ConfigCategory symptoms = builder.getOrCreateCategory(Text.translatable(SYMPTOMS_CATEGORY));
+        ConfigCategory settings = builder.getOrCreateCategory(Text.empty());
         ConfigEntryBuilder entries = builder.entryBuilder();
 
-        allergies.addEntry(entries.startDoubleField(Text.translatable("option.allergic.allergyChance"), saved.allergyChance())
+        settings.addEntry(entries.startDoubleField(Text.translatable("option.allergic.allergyChance"), saved.allergyChance())
                 .setDefaultValue(defaults.allergyChance()).setMin(0.0D).setMax(1.0D)
                 .setTooltip(Text.translatable("option.allergic.allergyChance.tooltip"))
                 .setSaveConsumer(value -> draft.allergyChance = value).build());
-        allergies.addEntry(entries.startIntField(Text.translatable("option.allergic.allergyDurationSeconds"), saved.allergyDurationSeconds())
+        settings.addEntry(entries.startIntField(Text.translatable("option.allergic.allergyDurationSeconds"), saved.allergyDurationSeconds())
                 .setDefaultValue(defaults.allergyDurationSeconds()).setMin(1).setMax(AllergyConfig.MAX_SECONDS)
                 .setTooltip(Text.translatable("option.allergic.allergyDurationSeconds.tooltip"))
                 .setSaveConsumer(value -> draft.allergyDurationSeconds = value).build());
-        sneezing.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.sneezingEnabled"), saved.sneezingEnabled())
+        settings.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.sneezingEnabled"), saved.sneezingEnabled())
                 .setDefaultValue(defaults.sneezingEnabled())
                 .setTooltip(Text.translatable("option.allergic.sneezingEnabled.tooltip"))
                 .setSaveConsumer(value -> draft.sneezingEnabled = value).build());
-        sneezing.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.sneezeDamageEnabled"), saved.sneezeDamageEnabled())
+        settings.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.sneezeDamageEnabled"), saved.sneezeDamageEnabled())
                 .setDefaultValue(defaults.sneezeDamageEnabled())
                 .setTooltip(Text.translatable("option.allergic.sneezeDamageEnabled.tooltip"))
                 .setSaveConsumer(value -> draft.sneezeDamageEnabled = value).build());
-        sneezing.addEntry(entries.startIntField(Text.translatable("option.allergic.sneezeMinIntervalSeconds"), saved.sneezeMinIntervalSeconds())
+        settings.addEntry(entries.startIntField(Text.translatable("option.allergic.sneezeMinIntervalSeconds"), saved.sneezeMinIntervalSeconds())
                 .setDefaultValue(defaults.sneezeMinIntervalSeconds()).setMin(1).setMax(AllergyConfig.MAX_SECONDS)
                 .setTooltip(Text.translatable("option.allergic.sneezeMinIntervalSeconds.tooltip"))
                 .setSaveConsumer(value -> draft.sneezeMinIntervalSeconds = value).build());
-        sneezing.addEntry(entries.startIntField(Text.translatable("option.allergic.sneezeMaxIntervalSeconds"), saved.sneezeMaxIntervalSeconds())
+        settings.addEntry(entries.startIntField(Text.translatable("option.allergic.sneezeMaxIntervalSeconds"), saved.sneezeMaxIntervalSeconds())
                 .setDefaultValue(defaults.sneezeMaxIntervalSeconds()).setMin(1).setMax(AllergyConfig.MAX_SECONDS)
                 .setTooltip(Text.translatable("option.allergic.sneezeMaxIntervalSeconds.tooltip"))
                 .setSaveConsumer(value -> draft.sneezeMaxIntervalSeconds = value).build());
-        sneezing.addEntry(entries.startFloatField(Text.translatable("option.allergic.sneezeDamageAmount"), saved.sneezeDamageAmount())
+        settings.addEntry(entries.startFloatField(Text.translatable("option.allergic.sneezeDamageAmount"), saved.sneezeDamageAmount())
                 .setDefaultValue(defaults.sneezeDamageAmount()).setMin(0.01F).setMax(Float.MAX_VALUE)
                 .setTooltip(Text.translatable("option.allergic.sneezeDamageAmount.tooltip"))
                 .setSaveConsumer(value -> draft.sneezeDamageAmount = value).build());
-        symptoms.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.nauseaEnabled"), saved.nauseaEnabled())
+        settings.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.nauseaEnabled"), saved.nauseaEnabled())
                 .setDefaultValue(defaults.nauseaEnabled())
                 .setTooltip(Text.translatable("option.allergic.nauseaEnabled.tooltip"))
                 .setSaveConsumer(value -> draft.nauseaEnabled = value).build());
-        symptoms.addEntry(entries.startIntField(Text.translatable("option.allergic.nauseaMinIntervalSeconds"), saved.nauseaMinIntervalSeconds())
+        settings.addEntry(entries.startIntField(Text.translatable("option.allergic.nauseaMinIntervalSeconds"), saved.nauseaMinIntervalSeconds())
                 .setDefaultValue(defaults.nauseaMinIntervalSeconds()).setMin(1).setMax(AllergyConfig.MAX_SECONDS)
                 .setTooltip(Text.translatable("option.allergic.nauseaMinIntervalSeconds.tooltip"))
                 .setSaveConsumer(value -> draft.nauseaMinIntervalSeconds = value).build());
-        symptoms.addEntry(entries.startIntField(Text.translatable("option.allergic.nauseaMaxIntervalSeconds"), saved.nauseaMaxIntervalSeconds())
+        settings.addEntry(entries.startIntField(Text.translatable("option.allergic.nauseaMaxIntervalSeconds"), saved.nauseaMaxIntervalSeconds())
                 .setDefaultValue(defaults.nauseaMaxIntervalSeconds()).setMin(1).setMax(AllergyConfig.MAX_SECONDS)
                 .setTooltip(Text.translatable("option.allergic.nauseaMaxIntervalSeconds.tooltip"))
                 .setSaveConsumer(value -> draft.nauseaMaxIntervalSeconds = value).build());
-        symptoms.addEntry(entries.startIntField(Text.translatable("option.allergic.nauseaDurationSeconds"), saved.nauseaDurationSeconds())
+        settings.addEntry(entries.startIntField(Text.translatable("option.allergic.nauseaDurationSeconds"), saved.nauseaDurationSeconds())
                 .setDefaultValue(defaults.nauseaDurationSeconds()).setMin(1).setMax(AllergyConfig.MAX_SECONDS)
                 .setTooltip(Text.translatable("option.allergic.nauseaDurationSeconds.tooltip"))
                 .setSaveConsumer(value -> draft.nauseaDurationSeconds = value).build());
-        symptoms.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.weaknessEnabled"), saved.weaknessEnabled())
+        settings.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.weaknessEnabled"), saved.weaknessEnabled())
                 .setDefaultValue(defaults.weaknessEnabled())
                 .setTooltip(Text.translatable("option.allergic.weaknessEnabled.tooltip"))
                 .setSaveConsumer(value -> draft.weaknessEnabled = value).build());
-        symptoms.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.slownessEnabled"), saved.slownessEnabled())
+        settings.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.slownessEnabled"), saved.slownessEnabled())
                 .setDefaultValue(defaults.slownessEnabled())
                 .setTooltip(Text.translatable("option.allergic.slownessEnabled.tooltip"))
                 .setSaveConsumer(value -> draft.slownessEnabled = value).build());
-        symptoms.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.miningFatigueEnabled"), saved.miningFatigueEnabled())
+        settings.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.miningFatigueEnabled"), saved.miningFatigueEnabled())
                 .setDefaultValue(defaults.miningFatigueEnabled())
                 .setTooltip(Text.translatable("option.allergic.miningFatigueEnabled.tooltip"))
                 .setSaveConsumer(value -> draft.miningFatigueEnabled = value).build());
