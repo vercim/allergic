@@ -1,0 +1,8 @@
+{
+  "sneeze": {
+    "subtitle": "subtitles.allergic.sneeze",
+    "sounds": [
+      "allergic:effect/sneeze"
+    ]
+  }
+}

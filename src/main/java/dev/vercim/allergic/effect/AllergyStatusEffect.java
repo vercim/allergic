@@ -2,6 +2,7 @@ package dev.vercim.allergic.effect;
 
 import dev.vercim.allergic.AllergicMod;
 import dev.vercim.allergic.config.AllergyConfig;
+import dev.vercim.allergic.registry.ModSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -64,7 +65,7 @@ public final class AllergyStatusEffect extends StatusEffect {
         }
 
         if (now >= schedule.nextNauseaTick) {
-            entity.addStatusEffect(hiddenSymptom(StatusEffects.NAUSEA, config.nauseaDurationSeconds()));
+            entity.addStatusEffect(visibleSymptom(StatusEffects.NAUSEA, config.nauseaDurationSeconds()));
             schedule.nextNauseaTick = now + randomDelayTicks(
                     entity,
                     config.nauseaMinIntervalSeconds(),
@@ -78,15 +79,15 @@ public final class AllergyStatusEffect extends StatusEffect {
 
     private static void sneeze(LivingEntity entity, AllergyConfig config, int amplifier) {
         entity.damage(entity.getDamageSources().magic(), config.sneezeDamageAmount() * (amplifier + 1));
-        entity.addStatusEffect(hiddenSymptom(StatusEffects.DARKNESS, config.darknessDurationSeconds()));
-        // The custom sneeze sound will be played here once its audio asset is available.
+        entity.addStatusEffect(visibleSymptom(StatusEffects.DARKNESS, config.darknessDurationSeconds()));
+        entity.playSound(ModSounds.SNEEZE, 1.0F, 0.95F + entity.getRandom().nextFloat() * 0.1F);
     }
 
-    private static StatusEffectInstance hiddenSymptom(
+    private static StatusEffectInstance visibleSymptom(
             net.minecraft.registry.entry.RegistryEntry<StatusEffect> effect,
             int durationSeconds
     ) {
-        return new StatusEffectInstance(effect, durationSeconds * TICKS_PER_SECOND, 0, false, false, false);
+        return new StatusEffectInstance(effect, durationSeconds * TICKS_PER_SECOND, 0, false, true, true);
     }
 
     private static int randomDelayTicks(LivingEntity entity, int minSeconds, int maxSeconds) {

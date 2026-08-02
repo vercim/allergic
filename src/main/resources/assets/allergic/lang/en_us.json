@@ -1,5 +1,6 @@
 {
   "effect.allergic.allergy": "Allergy",
+  "subtitles.allergic.sneeze": "Sneezing",
   "text.allergic.config.title": "Allergic settings",
   "text.allergic.config.category.general": "General",
   "option.allergic.allergyChance": "Allergy chance",
