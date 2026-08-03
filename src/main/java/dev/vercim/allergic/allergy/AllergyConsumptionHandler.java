@@ -25,6 +25,6 @@ public final class AllergyConsumptionHandler {
         }
 
         int durationTicks = Math.multiplyExact(AllergyConfig.get().allergyDurationSeconds(), 20);
-        player.addStatusEffect(new StatusEffectInstance(ModStatusEffects.ALLERGY, durationTicks, 0, false, false, true));
+        player.addStatusEffect(new StatusEffectInstance(ModStatusEffects.SNEEZING, durationTicks, 0, false, false, true));
     }
 }

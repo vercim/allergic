@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.vercim.allergic.allergy.AllergyManager;
-import dev.vercim.allergic.effect.AllergyStatusEffect;
+import dev.vercim.allergic.effect.SneezingStatusEffect;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -90,7 +90,7 @@ public final class AllergyCommands {
     private static int sneeze(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         Collection<ServerPlayerEntity> targets = getTargets(context);
         for (ServerPlayerEntity player : targets) {
-            AllergyStatusEffect.triggerSneeze(player);
+            SneezingStatusEffect.triggerSneeze(player);
         }
         return targets.size();
     }

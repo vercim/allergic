@@ -1,5 +1,6 @@
 {
-  "effect.allergic.allergy": "Allergy",
+  "effect.allergic.sneezing": "Sneezing",
+  "effect.allergic.tearing": "Tearing",
   "subtitles.allergic.sneeze": "Sneezing",
   "text.allergic.config.title": "Allergic settings",
   "text.allergic.config.category.allergies": "Allergies",

@@ -1,5 +1,6 @@
 {
-  "effect.allergic.allergy": "Аллергия",
+  "effect.allergic.sneezing": "Чихание",
+  "effect.allergic.tearing": "Слезоточение",
   "subtitles.allergic.sneeze": "Чихание",
   "text.allergic.config.title": "Настройки Allergic",
   "text.allergic.config.category.allergies": "Аллергии",

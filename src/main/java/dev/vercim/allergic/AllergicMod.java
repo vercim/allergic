@@ -1,6 +1,7 @@
 package dev.vercim.allergic;
 
 import dev.vercim.allergic.allergy.AllergyManager;
+import dev.vercim.allergic.allergy.FloweringHandler;
 import dev.vercim.allergic.command.AllergyCommands;
 import dev.vercim.allergic.config.AllergyConfig;
 import dev.vercim.allergic.registry.ModSounds;
@@ -21,6 +22,7 @@ public final class AllergicMod implements ModInitializer {
         ModSounds.register();
         ModStatusEffects.register();
         AllergyManager.registerEvents();
+        FloweringHandler.registerEvents();
         AllergyCommands.register();
         LOGGER.info("Allergic initialized successfully.");
     }

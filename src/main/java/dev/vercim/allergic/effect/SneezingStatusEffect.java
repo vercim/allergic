@@ -19,10 +19,12 @@ import org.joml.Vector3f;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-public final class AllergyStatusEffect extends StatusEffect {
+public final class SneezingStatusEffect extends StatusEffect {
     private static final int PARTICLE_COLOR = 0xC94F5C;
     private static final int TICKS_PER_SECOND = 20;
     private static final int MAX_INITIAL_NAUSEA_DELAY_SECONDS = 10;
+    private static final int SNEEZE_OOZING_DURATION_SECONDS = 60;
+    private static final double SNEEZE_OOZING_RADIUS = 5.0D;
     private static final double SNEEZE_UPWARD_VELOCITY = 0.25D;
     private static final DustParticleEffect SNEEZE_PARTICLE_BRIGHT =
             new DustParticleEffect(new Vector3f(0.55F, 1.0F, 0.08F), 1.2F);
@@ -31,7 +33,7 @@ public final class AllergyStatusEffect extends StatusEffect {
 
     private final Map<LivingEntity, SymptomSchedule> schedules = new WeakHashMap<>();
 
-    public AllergyStatusEffect() {
+    public SneezingStatusEffect() {
         super(StatusEffectCategory.HARMFUL, PARTICLE_COLOR);
     }
 
@@ -46,9 +48,9 @@ public final class AllergyStatusEffect extends StatusEffect {
             return true;
         }
 
-        StatusEffectInstance allergy = entity.getStatusEffect(ModStatusEffects.ALLERGY);
-        if (allergy != null) {
-            applyPersistentEffects(entity, allergy.getDuration());
+        StatusEffectInstance sneezing = entity.getStatusEffect(ModStatusEffects.SNEEZING);
+        if (sneezing != null) {
+            applyPersistentEffects(entity, sneezing.getDuration());
         }
 
         long now = entity.getWorld().getTime();
@@ -111,6 +113,7 @@ public final class AllergyStatusEffect extends StatusEffect {
         }
         entity.addVelocity(0.0D, SNEEZE_UPWARD_VELOCITY, 0.0D);
         entity.velocityModified = true;
+        applyOozingToNearbyEntities(entity);
         spawnSneezeParticles(entity);
         if (entity instanceof ServerPlayerEntity player) {
             ServerPlayNetworking.send(player, SneezePayload.INSTANCE);
@@ -125,6 +128,30 @@ public final class AllergyStatusEffect extends StatusEffect {
                 1.0F,
                 0.85F + entity.getRandom().nextFloat() * 0.3F
         );
+    }
+
+    private static void applyOozingToNearbyEntities(LivingEntity source) {
+        if (!(source.getWorld() instanceof ServerWorld world)) {
+            return;
+        }
+
+        double radiusSquared = SNEEZE_OOZING_RADIUS * SNEEZE_OOZING_RADIUS;
+        for (LivingEntity target : world.getEntitiesByClass(
+                LivingEntity.class,
+                source.getBoundingBox().expand(SNEEZE_OOZING_RADIUS),
+                target -> target != source
+                        && target.isAlive()
+                        && source.squaredDistanceTo(target) <= radiusSquared
+        )) {
+            target.addStatusEffect(new StatusEffectInstance(
+                    StatusEffects.OOZING,
+                    SNEEZE_OOZING_DURATION_SECONDS * TICKS_PER_SECOND,
+                    0,
+                    false,
+                    true,
+                    true
+            ));
+        }
     }
 
     private static void spawnSneezeParticles(LivingEntity entity) {
