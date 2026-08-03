@@ -30,6 +30,15 @@ final class AllergyClothConfigScreen {
                 .setDefaultValue(defaults.allergyDurationSeconds()).setMin(1).setMax(AllergyConfig.MAX_SECONDS)
                 .setTooltip(Text.translatable("option.allergic.allergyDurationSeconds.tooltip"))
                 .setSaveConsumer(value -> draft.allergyDurationSeconds = value).build());
+        settings.addEntry(entries.startIntSlider(
+                        Text.translatable("option.allergic.tearingBlurStrength"),
+                        saved.tearingBlurStrength(),
+                        AllergyConfig.MIN_TEARING_BLUR_STRENGTH,
+                        AllergyConfig.MAX_TEARING_BLUR_STRENGTH
+                )
+                .setDefaultValue(defaults.tearingBlurStrength())
+                .setTooltip(Text.translatable("option.allergic.tearingBlurStrength.tooltip"))
+                .setSaveConsumer(value -> draft.tearingBlurStrength = value).build());
         settings.addEntry(entries.startBooleanToggle(Text.translatable("option.allergic.sneezingEnabled"), saved.sneezingEnabled())
                 .setDefaultValue(defaults.sneezingEnabled())
                 .setTooltip(Text.translatable("option.allergic.sneezingEnabled.tooltip"))
@@ -86,6 +95,7 @@ final class AllergyClothConfigScreen {
     private static final class Draft {
         private double allergyChance;
         private int allergyDurationSeconds;
+        private int tearingBlurStrength;
         private boolean sneezingEnabled;
         private boolean sneezeDamageEnabled;
         private int sneezeMinIntervalSeconds;
@@ -102,6 +112,7 @@ final class AllergyClothConfigScreen {
         private Draft(AllergyConfig config) {
             allergyChance = config.allergyChance();
             allergyDurationSeconds = config.allergyDurationSeconds();
+            tearingBlurStrength = config.tearingBlurStrength();
             sneezingEnabled = config.sneezingEnabled();
             sneezeDamageEnabled = config.sneezeDamageEnabled();
             sneezeMinIntervalSeconds = config.sneezeMinIntervalSeconds();
@@ -120,6 +131,7 @@ final class AllergyClothConfigScreen {
             return new AllergyConfig(
                     allergyChance,
                     allergyDurationSeconds,
+                    tearingBlurStrength,
                     sneezingEnabled,
                     sneezeDamageEnabled,
                     sneezeMinIntervalSeconds,

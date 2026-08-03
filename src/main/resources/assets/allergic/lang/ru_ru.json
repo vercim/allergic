@@ -10,6 +10,8 @@
   "option.allergic.allergyChance.tooltip": "Вероятность, что каждый съедобный предмет станет аллергеном. 0,35 означает 35%.",
   "option.allergic.allergyDurationSeconds": "Длительность аллергии (секунды)",
   "option.allergic.allergyDurationSeconds.tooltip": "Как долго длится аллергия после употребления аллергена.",
+  "option.allergic.tearingBlurStrength": "Сила размытия при слезоточении",
+  "option.allergic.tearingBlurStrength.tooltip": "Определяет, насколько сильно Слезоточение размывает мир. 0 отключает размытие; 10 — максимальная сила.",
   "option.allergic.sneezingEnabled": "Включить чихание",
   "option.allergic.sneezingEnabled.tooltip": "Включает звук, частицы и экранный эффект чихания.",
   "option.allergic.sneezeDamageEnabled": "Урон от чихания",

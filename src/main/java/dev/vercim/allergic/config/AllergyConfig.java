@@ -17,6 +17,7 @@ import java.nio.file.Path;
 public record AllergyConfig(
         double allergyChance,
         int allergyDurationSeconds,
+        int tearingBlurStrength,
         boolean sneezingEnabled,
         boolean sneezeDamageEnabled,
         int sneezeMinIntervalSeconds,
@@ -33,6 +34,9 @@ public record AllergyConfig(
     public static final int MAX_SECONDS = Integer.MAX_VALUE / 20;
     public static final double DEFAULT_ALLERGY_CHANCE = 0.35D;
     public static final int DEFAULT_ALLERGY_DURATION_SECONDS = 300;
+    public static final int MIN_TEARING_BLUR_STRENGTH = 0;
+    public static final int MAX_TEARING_BLUR_STRENGTH = 10;
+    public static final int DEFAULT_TEARING_BLUR_STRENGTH = 5;
     public static final boolean DEFAULT_SNEEZING_ENABLED = true;
     public static final boolean DEFAULT_SNEEZE_DAMAGE_ENABLED = true;
     public static final int DEFAULT_SNEEZE_MIN_INTERVAL_SECONDS = 10;
@@ -78,6 +82,7 @@ public record AllergyConfig(
         return new AllergyConfig(
                 DEFAULT_ALLERGY_CHANCE,
                 DEFAULT_ALLERGY_DURATION_SECONDS,
+                DEFAULT_TEARING_BLUR_STRENGTH,
                 DEFAULT_SNEEZING_ENABLED,
                 DEFAULT_SNEEZE_DAMAGE_ENABLED,
                 DEFAULT_SNEEZE_MIN_INTERVAL_SECONDS,
@@ -116,6 +121,13 @@ public record AllergyConfig(
         if (legacyConfig && duration == 20) {
             duration = DEFAULT_ALLERGY_DURATION_SECONDS;
         }
+        int tearingBlurStrength = readIntegerInRange(
+                object,
+                "tearingBlurStrength",
+                DEFAULT_TEARING_BLUR_STRENGTH,
+                MIN_TEARING_BLUR_STRENGTH,
+                MAX_TEARING_BLUR_STRENGTH
+        );
         boolean sneezingEnabled = readBoolean(object, "sneezingEnabled", DEFAULT_SNEEZING_ENABLED);
         boolean sneezeDamageEnabled = readBoolean(object, "sneezeDamageEnabled", DEFAULT_SNEEZE_DAMAGE_ENABLED);
         int sneezeMinInterval = readPositiveInteger(
@@ -171,6 +183,7 @@ public record AllergyConfig(
         return new AllergyConfig(
                 chance,
                 duration,
+                tearingBlurStrength,
                 sneezingEnabled,
                 sneezeDamageEnabled,
                 sneezeMinInterval,
@@ -203,6 +216,14 @@ public record AllergyConfig(
     private static int readPositiveInteger(JsonObject object, String key, int fallback, int maximum) {
         double value = readFiniteDouble(object, key, fallback);
         if (value <= 0.0D || value > maximum || value != Math.rint(value)) {
+            return fallback;
+        }
+        return (int) value;
+    }
+
+    private static int readIntegerInRange(JsonObject object, String key, int fallback, int minimum, int maximum) {
+        double value = readFiniteDouble(object, key, fallback);
+        if (value < minimum || value > maximum || value != Math.rint(value)) {
             return fallback;
         }
         return (int) value;
