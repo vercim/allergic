@@ -5,6 +5,9 @@
   "mixins": [
     "ItemStackMixin"
   ],
+  "client": [
+    "GameRendererMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

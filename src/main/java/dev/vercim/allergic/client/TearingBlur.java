@@ -1,7 +1,6 @@
 package dev.vercim.allergic.client;
 
 import dev.vercim.allergic.registry.ModStatusEffects;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.MinecraftClient;
 
 public final class TearingBlur {
@@ -17,15 +16,14 @@ public final class TearingBlur {
     private TearingBlur() {
     }
 
-    public static void render(WorldRenderContext context) {
+    public static void render() {
         MinecraftClient client = MinecraftClient.getInstance();
         long now = System.nanoTime();
         boolean shouldBlur = client.player != null
-                && client.currentScreen == null
                 && client.player.hasStatusEffect(ModStatusEffects.TEARING);
         updateFade(shouldBlur, now);
 
-        if (client.currentScreen != null || fadeAmount <= 0.0F) {
+        if (fadeAmount <= 0.0F) {
             return;
         }
 
