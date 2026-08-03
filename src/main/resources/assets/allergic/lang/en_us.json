@@ -12,6 +12,8 @@
   "option.allergic.allergyDurationSeconds.tooltip": "How long the allergy lasts after eating an allergen.",
   "option.allergic.tearingBlurStrength": "Tearing blur strength",
   "option.allergic.tearingBlurStrength.tooltip": "Controls how strongly Tearing blurs the world. 0 disables blur; 10 is the strongest.",
+  "option.allergic.tearingTriggerRadius": "Tearing trigger radius (blocks)",
+  "option.allergic.tearingTriggerRadius.tooltip": "Distance at which nearby flowers, logs, or leaves trigger Tearing.",
   "option.allergic.sneezingEnabled": "Enable sneezing",
   "option.allergic.sneezingEnabled.tooltip": "Enables sneeze sounds, particles, and the sneeze overlay.",
   "option.allergic.sneezeDamageEnabled": "Sneeze damage",

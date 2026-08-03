@@ -12,6 +12,8 @@
   "option.allergic.allergyDurationSeconds.tooltip": "Как долго длится аллергия после употребления аллергена.",
   "option.allergic.tearingBlurStrength": "Сила размытия при слезоточении",
   "option.allergic.tearingBlurStrength.tooltip": "Определяет, насколько сильно Слезоточение размывает мир. 0 отключает размытие; 10 — максимальная сила.",
+  "option.allergic.tearingTriggerRadius": "Радиус слезоточения (блоки)",
+  "option.allergic.tearingTriggerRadius.tooltip": "Расстояние, на котором цветы, брёвна или листва вызывают Слезоточение.",
   "option.allergic.sneezingEnabled": "Включить чихание",
   "option.allergic.sneezingEnabled.tooltip": "Включает звук, частицы и экранный эффект чихания.",
   "option.allergic.sneezeDamageEnabled": "Урон от чихания",

@@ -18,6 +18,7 @@ public record AllergyConfig(
         double allergyChance,
         int allergyDurationSeconds,
         int tearingBlurStrength,
+        int tearingTriggerRadius,
         boolean sneezingEnabled,
         boolean sneezeDamageEnabled,
         int sneezeMinIntervalSeconds,
@@ -37,6 +38,9 @@ public record AllergyConfig(
     public static final int MIN_TEARING_BLUR_STRENGTH = 0;
     public static final int MAX_TEARING_BLUR_STRENGTH = 10;
     public static final int DEFAULT_TEARING_BLUR_STRENGTH = 5;
+    public static final int MIN_TEARING_TRIGGER_RADIUS = 1;
+    public static final int MAX_TEARING_TRIGGER_RADIUS = 16;
+    public static final int DEFAULT_TEARING_TRIGGER_RADIUS = 3;
     public static final boolean DEFAULT_SNEEZING_ENABLED = true;
     public static final boolean DEFAULT_SNEEZE_DAMAGE_ENABLED = true;
     public static final int DEFAULT_SNEEZE_MIN_INTERVAL_SECONDS = 10;
@@ -83,6 +87,7 @@ public record AllergyConfig(
                 DEFAULT_ALLERGY_CHANCE,
                 DEFAULT_ALLERGY_DURATION_SECONDS,
                 DEFAULT_TEARING_BLUR_STRENGTH,
+                DEFAULT_TEARING_TRIGGER_RADIUS,
                 DEFAULT_SNEEZING_ENABLED,
                 DEFAULT_SNEEZE_DAMAGE_ENABLED,
                 DEFAULT_SNEEZE_MIN_INTERVAL_SECONDS,
@@ -127,6 +132,13 @@ public record AllergyConfig(
                 DEFAULT_TEARING_BLUR_STRENGTH,
                 MIN_TEARING_BLUR_STRENGTH,
                 MAX_TEARING_BLUR_STRENGTH
+        );
+        int tearingTriggerRadius = readIntegerInRange(
+                object,
+                "tearingTriggerRadius",
+                DEFAULT_TEARING_TRIGGER_RADIUS,
+                MIN_TEARING_TRIGGER_RADIUS,
+                MAX_TEARING_TRIGGER_RADIUS
         );
         boolean sneezingEnabled = readBoolean(object, "sneezingEnabled", DEFAULT_SNEEZING_ENABLED);
         boolean sneezeDamageEnabled = readBoolean(object, "sneezeDamageEnabled", DEFAULT_SNEEZE_DAMAGE_ENABLED);
@@ -184,6 +196,7 @@ public record AllergyConfig(
                 chance,
                 duration,
                 tearingBlurStrength,
+                tearingTriggerRadius,
                 sneezingEnabled,
                 sneezeDamageEnabled,
                 sneezeMinInterval,
