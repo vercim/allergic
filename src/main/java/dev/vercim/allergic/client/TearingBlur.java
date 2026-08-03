@@ -24,5 +24,6 @@ public final class TearingBlur {
 
         blur.setUniforms("Radius", strength);
         blur.render(0.0F);
+        client.getFramebuffer().beginWrite(false);
     }
 }
