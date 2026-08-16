@@ -1,7 +1,7 @@
-## What does it do?
+![What does it do](https://cdn.modrinth.com/data/cached_images/31094aa33a38945cfdb386bd0028260ed83275fc_0.webp)
 Allergic is a Minecraft mod that adds food allergies. When a player first joins a world, they receive their own randomly generated set of food allergens.
 
-## Configuration
+![Configuration](https://cdn.modrinth.com/data/cached_images/7aa3b7a2f33b1a990f5c964f67d63890f61b65a1_0.webp)
 Every effect can be toggled off independently. Open settings through ModMenu (Fabric) or the in-game mod menu (NeoForge).
 
 ## Commands
