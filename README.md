@@ -4,7 +4,8 @@ Allergic is a Minecraft mod that adds food allergies. When a player first joins 
 ![Configuration](https://cdn.modrinth.com/data/cached_images/7aa3b7a2f33b1a990f5c964f67d63890f61b65a1_0.webp)
 Every effect can be toggled off independently. Open settings through ModMenu (Fabric) or the in-game mod menu (NeoForge).
 
-## Commands
+
+![Commands](https://cdn.modrinth.com/data/cached_images/926e7f4d094721d79d1cc94ff90869828b2e4725_0.webp)
 - `/allergy list [targets]` — shows the allergens for you or the selected player(s).
 - `/allergy regenerate [targets]` — generates a new random allergy list for you or the selected player(s).
 - `/allergy sneeze [targets]` — makes you or the selected player(s) sneeze, including the configured sneeze damage and screen overlay.
