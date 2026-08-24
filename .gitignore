@@ -5,3 +5,5 @@ out/
 .idea/
 *.iml
 config/allergic.json
+AGENTS.md
+CLAUDE.md
